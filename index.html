@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      var state = prompt("What state do you find yourself ?");
+      var city = prompt("A city maybe?");
+      $.getJSON("http://cooper-union-weather-proxy.herokuapp.com/weather/" + state + "/" + city, function(response){
+        console.log(response);
+        //example of outputting the current temp
+        var currentTemp = response.current_observation.feelslike_f;
+      //  if(currentTemp > 47) {
+      //    $("#temperature").append("It is warm out! ");
+      //  } else {
+      //    $("#temperature").append("It is cold out! ");
+      //  }
+        $("#temperature").append("It is currently "+ response.current_observation.feelslike_f + " degrees F in " + city + ", " + state + ".");
+
+      //  $('#temperature').css("color","yellow");
+      //  $('#temperature').css("backgroundColor","black");
+      //  $('#temperature').css("fontFamily","sans-serif");
+        //create image tag
+        var imageTag = '<img src="'+response.current_observation.icon_url+'" />';
+
+        $('#imageWeather').append(imageTag);
+        $('#infoWeather').append(response.current_observation.weather);
+        $('#update').append(response.current_observation.observation_time);
+
+
+
+      });
+    </script>
+    <style>
+
+      body {
+        background-color: gainsboro;
+        font-family: sans-serif;
+
+      }
+
+      #temperature {
+        color: yellow;
+        background-color: black;
+        width : 350px;
+        font-size: 25px;
+        padding: 50px;
+        margin-left: 100px;
+        margin-top: 100px;
+      }
+
+      #imageWeather {
+        margin : 80px;
+        margin-left: 150px;
+        float: left;
+      }
+
+      #infoWeather {
+        margin: 50px;
+        font-size: 50px;
+        font-weight: bold;
+        width : 100px;
+        float: left;
+      }
+
+      #update {
+        font-family: serif;
+        font-style: italic;
+        position: fixed;
+        margin-top: 400px;
+        margin-left: 160px;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <div id="temperature"></div>
+    <div id="imageWeather"></div>
+    <div id="infoWeather"></div>
+    <div id="update"></div>
+
+  </body>
+</html>
